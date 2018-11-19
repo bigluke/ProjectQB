@@ -312,6 +312,8 @@ $(function(){
 						rowMemberAuth = $(this).parent().parent().children().eq(6).text("학생");
 					});
 					swal("성공!","학생으로 등록 되었습니다","success");
+					$("input[name=checkall]:checked").prop("checked", false);
+					$("input[name=chk]:checked").prop("checked", false);
 				},
 				error : function(error){
 					swal("실패!","등록할 회원을 선택해주세요","error");
