@@ -215,7 +215,7 @@
     
     /* 10.24 pastExamPaper 페이지 css 추가 */
     /* 문제 정답/오답 이미지 표기 */
-    .oximg_s, .oximg_o {	
+    .oximg_s, .oximg_o {
     	position: absolute;
 	    width: 70px;
 	    height: 70px;

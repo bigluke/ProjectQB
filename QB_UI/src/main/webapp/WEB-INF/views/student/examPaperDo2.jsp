@@ -147,6 +147,8 @@
 		// 답안지를 클릭했을 때 문제 보기에도 표시 
 		$(document).on('click', '.answer_choice', function(){
 			var ques_num = $(this).find('img').attr('class').substr(15);
+			/* console.log("ques_num img class : " + $(this).find('img').attr('class'));
+			console.log("ques_num : " + ques_num);  */
 			$("." + ques_num).css("display", "none"); // 이걸로 한 문제의 체크 이미지 전체를 지운다. 
 
 			var img_ques_id = $(this).find('img').attr('id').substr(4);
@@ -160,12 +162,12 @@
 		});
 
 		// 단답형 답 문제지와 답지 동시에 입력하기 
-		$(document).on('click', '.trd_div input[type="text"]', function(){
+		$(document).on('change', '.trd_div input[type="text"]', function(){
 			var ques_num2 = $(this).attr('id')
 			var _index = ques_num2.lastIndexOf("_");
 			var ques_num = ques_num2.substr(0, _index);
 			$("#" + ques_num).val($(this).val());
-		});
+		}); 
 		
 		$(document).on('change', '.fst_div input[type="text"], .scd-div input[type="text"]', function(){
 			var ques_num2 = $(this).attr('id').substr(0, 6);
@@ -176,18 +178,23 @@
 		
 		// 제출 버튼 눌렀을 때 form 제출 (폼의 타깃을 부모창으로 설정해 controller에서 페이지 이동 경로 지정해줌)
 	 	$('#examPaperSubmit').click(function(){
-	 		
 	 		var questionCount = ${questionCount};
 	 		var checkUnSolved = 0; 
 	 		
+	 		console.log("questionCount : " + questionCount);
+	 		
 	 		for(var i = 0; i < questionCount; i++){   
 	 			// console.log(i + " : " + $('input[name="student_answer['+i+'].student_answer_choice"]:checked').length);
-	 			if($('input[name="student_answer['+i+'].student_answer_choice"]:checked').length == 0 ||  
-	 					$('.ques_choice input[type="text"]').val() == ""){
-	 				checkUnSolved += 1;
-	 			}
+	 			if($('input[name="student_answer['+i+'].student_answer_choice"]:checked').length == 0){
+	 				var classVal = $('input[name="student_answer['+i+'].student_answer_choice"]').attr("class");
+	 				if(classVal == "ques_choice_choice_answer") {
+	 					checkUnSolved += 1;
+	 				} 
+	 			}	
 	 		}
-	 		
+	 		if($('.ques_choice_short_answer').val() == "" || $('.ques_choice_short_answer').val() == null){
+ 				checkUnSolved += 1;
+ 			}
 	 		if(checkUnSolved == 0){
 	 			if(confirm("시험을 제출하시겠습니까?")){   	//	문제를 모두 풀었을 때 
 					$('#answerForm').target = opener.name;
@@ -211,7 +218,6 @@
  					return false;
  				}
 	 		}
-	 		
 		});  // 제출 버튼 눌렀을 때 스크립트 종료 부분
 		
 		// 시험 시간 5분 전 알람 
@@ -295,7 +301,7 @@
 												</td>  	
 												<td>
 													<input type="radio" name="student_answer[${status.index}].student_answer_choice" id="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}" 
-													value="${questionChoice.question_choice_num}">
+													class="ques_choice_choice_answer" value="${questionChoice.question_choice_num}">
 													<label for="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}">${questionChoice.question_choice_content}</label>
 												</td>
 											</tr>
@@ -311,7 +317,7 @@
 									<c:when test="${question.question_type eq '단답형'}">
 										<tr class="ques_choice">
 											<td class="questionTd"></td>  
-											<td><input type="text" id="ques_${question.exam_question_seq}" name="student_answer[${status.index}].student_answer_choice"></td>
+											<td><input type="text" id="ques_${question.exam_question_seq}" class="ques_choice_short_answer" name="student_answer[${status.index}].student_answer_choice"></td>
 										</tr>
 										<%-- <c:set var="questionCount" value="${questionCount + 1}" /> --%>
 									</c:when>
@@ -395,7 +401,7 @@
                               </c:forEach>
                            </c:when>
                            <c:when test="${question.question_type eq '단답형'}">
-                              <td class="tg-baqh answer_choice" colspan="5"><input type="text" class="" name="" id="ques_${question.exam_question_seq}_answer" ></td>
+                              <td class="tg-baqh answer_choice" colspan="5"><input type="text" id="ques_${question.exam_question_seq}_answer" ></td>
                            </c:when>
                         </c:choose>
                      </tr>
