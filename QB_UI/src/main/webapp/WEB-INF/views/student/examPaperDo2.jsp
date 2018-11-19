@@ -7,11 +7,12 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page import="javax.servlet.http.HttpServletRequest"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="se" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="se"
+	uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -235,6 +236,13 @@
                 self.close();
             } 
 		}, remain_time); 
+		
+		$('#examPaperExit').click(function(){
+			if (opener != null) {
+				opener.insert = null;
+				self.close();
+			}
+		});
 	});  // document.ready 종료 
 </script>
 </head>
@@ -250,216 +258,253 @@
 		<hr>
 		<div class="panel-body">
 			<div class="row content-panel exampaneldetail">
-			
+
 				<!-- 페이징 처리 변수 설정 -->
-				<c:set var="totalRows" value="${questionCount}"/>
-				<fmt:parseNumber var="totalPages" value="${(questionCount / 4)+(1-((questionCount / 4)%1))%1}" integerOnly="true"/>
-				<c:set var="lastPageQuestion" value="${totalRows % 4}"/>
+				<c:set var="totalRows" value="${questionCount}" />
+				<fmt:parseNumber var="totalPages"
+					value="${(questionCount / 4)+(1-((questionCount / 4)%1))%1}"
+					integerOnly="true" />
+				<c:set var="lastPageQuestion" value="${totalRows % 4}" />
 				<c:if test="${lastPageQuestion == 0}">
-					<c:set var="lastPageQuestion" value="4"/>
+					<c:set var="lastPageQuestion" value="4" />
 				</c:if>
-				
-				
-				<c:set var="pageCount" value="1"/>		<!-- 문제 하나가 한 페이지에 set 될 때마다 1씩 카운트 증가 -->
-				<c:set var="pageNum" value="1"/>		<!-- 하나의 페이지 표시 -->
-				
+
+
+				<c:set var="pageCount" value="1" />
+				<!-- 문제 하나가 한 페이지에 set 될 때마다 1씩 카운트 증가 -->
+				<c:set var="pageNum" value="1" />
+				<!-- 하나의 페이지 표시 -->
+
 				<form method="post" id="answerForm" target="examScheduleDetail">
-					<c:forEach var="question" items="${questionList}" varStatus="status">
-					
+					<c:forEach var="question" items="${questionList}"
+						varStatus="status">
+
 						<c:if test="${pageCount == 1}">
 							<div id="page${pageNum}" class="pageDiv">
-							<div class="col-lg-5 fst_div" id="examBox">	
+								<div class="col-lg-5 fst_div" id="examBox">
 						</c:if>
-						
-							<!-- 문제 하나 -->
-							<table class="questionTable">
- 								<input type="hidden" name="student_answer[${status.index}].member_id" value="${pageContext.request.userPrincipal.name}"> 
-								<input type="hidden" name="student_answer[${status.index}].exam_info_num" value="${exam_info.exam_info_num}">
-		                        <input type="hidden" name="student_answer[${status.index}].question_num" value="${question.question_num}"> 
-		                        <input type="hidden" name="student_answer[${status.index}].exam_question_seq" value="${question.exam_question_seq}"> 
-								<tr class="questionTr">
-									<td class="questionTd questionSpace"><b>${question.exam_question_seq}. </b></td>
-									<td class="questionSpace"><b>${question.question_name} &nbsp;&nbsp;(${question.exam_question_score}점)</b></td>
+
+						<!-- 문제 하나 -->
+						<table class="questionTable">
+							<input type="hidden"
+								name="student_answer[${status.index}].member_id"
+								value="${pageContext.request.userPrincipal.name}">
+							<input type="hidden"
+								name="student_answer[${status.index}].exam_info_num"
+								value="${exam_info.exam_info_num}">
+							<input type="hidden"
+								name="student_answer[${status.index}].question_num"
+								value="${question.question_num}">
+							<input type="hidden"
+								name="student_answer[${status.index}].exam_question_seq"
+								value="${question.exam_question_seq}">
+							<tr class="questionTr">
+								<td class="questionTd questionSpace"><b>${question.exam_question_seq}.
+								</b></td>
+								<td class="questionSpace"><b>${question.question_name}
+										&nbsp;&nbsp;(${question.exam_question_score}점)</b></td>
+							</tr>
+							<c:if test="${not empty question.question_img}">
+								<!-- 이미지 있으면 추가 -->
+								<tr class="ques_choice">
+									<td class="questionTd"></td>
+									<td><img class="question_img"
+										src="${pageContext.request.contextPath}/img/${question.question_img}"></td>
 								</tr>
-								<c:if test="${not empty question.question_img}"> <!-- 이미지 있으면 추가 -->
-									<tr class="ques_choice">
-										<td class="questionTd"></td>  
-										<td><img class="question_img" src="${pageContext.request.contextPath}/img/${question.question_img}"></td>
-									</tr>
-								</c:if>
-								<c:choose>
-									<c:when test="${question.question_type eq '객관식'}">
-										<c:forEach var="questionChoice" items="${questionChoiceList}">
-											<c:if test="${questionChoice.question_num eq question.question_num}">
+							</c:if>
+							<c:choose>
+								<c:when test="${question.question_type eq '객관식'}">
+									<c:forEach var="questionChoice" items="${questionChoiceList}">
+										<c:if
+											test="${questionChoice.question_num eq question.question_num}">
 											<tr class="ques_choice">
 												<td class="questionTd">
 													<div class="wrap">
-														<img class="oximg_v oximg_v_ques_${question.exam_question_seq}" id="img_ques_${question.exam_question_seq}_${questionChoice.question_choice_num}" 
-														src="${pageContext.request.contextPath}/img/oximg_v.png">
-													</div>
-													${questionChoice.question_choice_num})
-												</td>  	
-												<td>
-													<input type="radio" name="student_answer[${status.index}].student_answer_choice" id="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}" 
-													class="ques_choice_choice_answer" value="${questionChoice.question_choice_num}">
-													<label for="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}">${questionChoice.question_choice_content}</label>
+														<img
+															class="oximg_v oximg_v_ques_${question.exam_question_seq}"
+															id="img_ques_${question.exam_question_seq}_${questionChoice.question_choice_num}"
+															src="${pageContext.request.contextPath}/img/oximg_v.png">
+													</div> ${questionChoice.question_choice_num})
+												</td>
+												<td><input type="radio"
+													name="student_answer[${status.index}].student_answer_choice"
+													id="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}"
+													class="ques_choice_choice_answer"
+													value="${questionChoice.question_choice_num}"> <label
+													for="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}">${questionChoice.question_choice_content}</label>
 												</td>
 											</tr>
-												<c:if test="${questionChoice.question_choice_image ne null}">
-													<tr>
-														<td colspan="2"><img class="answer_choice_image" src="${pageContext.request.contextPath}/img/${questionChoice.question_choice_image}"></td>
-													</tr>
-												</c:if>
+											<c:if test="${questionChoice.question_choice_image ne null}">
+												<tr>
+													<td colspan="2"><img class="answer_choice_image"
+														src="${pageContext.request.contextPath}/img/${questionChoice.question_choice_image}"></td>
+												</tr>
 											</c:if>
-										</c:forEach>
-										<%-- <c:set var="questionCount" value="${questionCount + 1}" /> --%>
-									</c:when>
-									<c:when test="${question.question_type eq '단답형'}">
-										<tr class="ques_choice">
-											<td class="questionTd"></td>  
-											<td><input type="text" id="ques_${question.exam_question_seq}" class="ques_choice_short_answer" name="student_answer[${status.index}].student_answer_choice"></td>
-										</tr>
-										<%-- <c:set var="questionCount" value="${questionCount + 1}" /> --%>
-									</c:when>
-								</c:choose>
-							</table>
-						<!-- 문제 하나 끝 -->
-						
-						<c:choose>
-							<c:when test="${pageNum ne totalPages}">  
-								<c:if test="${pageCount == 2}">
-									</div>
-									<div class="col-lg-5 scd-div">
-								</c:if>
-								<c:choose>
-									<c:when test="${pageCount ne 4 }">
-										<c:set var="pageCount" value="${pageCount + 1}"/><!-- 한 페이지 당 문제 갯수 카운트 하나 업, 여기서 업뎃됐다 -->
-									</c:when>
-									<c:when test="${pageCount == 4}">
-											</div> <!-- scd-div 닫는 div -->
-										</div> <!-- page 닫는 div  -->
-										<c:set var="pageCount" value="1"/>
-										<c:set var="pageNum" value="${pageNum +1}"/>
-									</c:when>
-								</c:choose>
-							</c:when>	
-								
-							<c:when test="${pageNum eq totalPages}"> <!-- 마지막 페이지일때 -->
-								<c:choose>
-									<c:when test="${pageCount ne lastPageQuestion}">
-										<c:if test="${pageCount == 2}">
-											</div>
-											<div class="col-lg-5 scd-div">
 										</c:if>
-										<c:set var="pageCount" value="${pageCount + 1}"/><!-- 한 페이지 당 문제 갯수 카운트 하나 업, 여기서 업뎃됐다 -->
-									</c:when>
-									<c:when test="${pageCount eq lastPageQuestion}">
-										<c:choose>
-											<c:when test="${pageCount == 1 || pageCount == 2}">
-															</div> <!-- fst-div 닫는 div -->
-														<div class="col-lg-5 scd-div">
-													</div>
-												</div> <!-- page 닫는 div  -->
-											</c:when>
-											<c:when test="${pageCount == 3 || pageCount == 4}">
-													</div> <!-- scd-div 닫는 div -->
-												</div> <!-- page 닫는 div  -->
-											</c:when>
-										</c:choose>
-									</c:when>
-								</c:choose>
-							</c:when>	
-						</c:choose>
-					</c:forEach>
-                </form>
-                
-				<div class="col-lg-2 trd_div">
-					<!-- OMR 시작 div -->
-               <table class="tg">
-                  <tr>
-                     <th class="tg-baqh qname" colspan="6">답안지</th>
-                  </tr>
-                  <c:forEach var="question" items="${questionList}">
-                     <tr>
-                        <td class="tg-baqh qnumber">${question.exam_question_seq}</td>
-                        <c:choose>
-                           <c:when test="${question.question_type eq '객관식'}">
-                           <c:set var="count" value="0" />
-                              <c:forEach var="questionChoice" items="${questionChoiceList}" varStatus="status">
-                                 <c:if test="${questionChoice.question_num eq question.question_num}">                                 
-                                     <td class="tg-baqh answer_choice">
-                                             <div class="wrap"><img class="answer_oximg_v oximg_v_ques_${question.exam_question_seq}" 
-                                             id="ans_img_ques_${question.exam_question_seq}_${questionChoice.question_choice_num}" 
-                                             src="${pageContext.request.contextPath}/img/oximg_v.png"></div>
-                                             ${questionChoice.question_choice_num}
-                                             <c:set var="count" value="${count+1 }"/>
-                                     </td>                                                                                          
-                                 </c:if>
-                              </c:forEach>
-                              <c:forEach begin="${count}" end="4">
-                                 <td class="tg-baqh qname"></td>
-                              </c:forEach>
-                           </c:when>
-                           <c:when test="${question.question_type eq '단답형'}">
-                              <td class="tg-baqh answer_choice" colspan="5"><input type="text" id="ques_${question.exam_question_seq}_answer" ></td>
-                           </c:when>
-                        </c:choose>
-                     </tr>
-                  </c:forEach>
-               </table>
-					<br>
-				</div>
+									</c:forEach>
+									<%-- <c:set var="questionCount" value="${questionCount + 1}" /> --%>
+								</c:when>
+								<c:when test="${question.question_type eq '단답형'}">
+									<tr class="ques_choice">
+										<td class="questionTd"></td>
+										<td><input type="text"
+											id="ques_${question.exam_question_seq}"
+											class="ques_choice_short_answer"
+											name="student_answer[${status.index}].student_answer_choice"></td>
+									</tr>
+									<%-- <c:set var="questionCount" value="${questionCount + 1}" /> --%>
+								</c:when>
+							</c:choose>
+						</table>
+						<!-- 문제 하나 끝 -->
+
+						<c:choose>
+							<c:when test="${pageNum ne totalPages}">
+								<c:if test="${pageCount == 2}">
 			</div>
-			
-			<div>
-				<div class="col-lg-10 pastExamBtnDiv">
-					<span id="prevPageSpan"></span>
-					<span id="nextPageSpan"></span>
-				</div>
-				<div class="col-lg-2 pastExamBtnDiv2">
-					<se:authorize access="hasRole('ROLE_TEACHER')">
-						<button class="btn btn-theme03 exampaneldetailBtn" id="examPaperExit">창 닫기</button>
-					</se:authorize>
-					<se:authorize access="hasRole('ROLE_STUDENT')">
-						<button class="btn btn-theme03 exampaneldetailBtn" id="examPaperSubmit">제출하기</button>
-					</se:authorize>
-				</div>
+			<div class="col-lg-5 scd-div">
+				</c:if>
+				<c:choose>
+					<c:when test="${pageCount ne 4 }">
+						<c:set var="pageCount" value="${pageCount + 1}" />
+						<!-- 한 페이지 당 문제 갯수 카운트 하나 업, 여기서 업뎃됐다 -->
+					</c:when>
+					<c:when test="${pageCount == 4}">
 			</div>
-			
-			
+			<!-- scd-div 닫는 div -->
+		</div>
+		<!-- page 닫는 div  -->
+		<c:set var="pageCount" value="1" />
+		<c:set var="pageNum" value="${pageNum +1}" />
+		</c:when>
+		</c:choose>
+		</c:when>
+
+		<c:when test="${pageNum eq totalPages}">
+			<!-- 마지막 페이지일때 -->
+			<c:choose>
+				<c:when test="${pageCount ne lastPageQuestion}">
+					<c:if test="${pageCount == 2}">
+	</div>
+	<div class="col-lg-5 scd-div">
+		</c:if>
+		<c:set var="pageCount" value="${pageCount + 1}" />
+		<!-- 한 페이지 당 문제 갯수 카운트 하나 업, 여기서 업뎃됐다 -->
+		</c:when>
+		<c:when test="${pageCount eq lastPageQuestion}">
+			<c:choose>
+				<c:when test="${pageCount == 1 || pageCount == 2}">
+	</div>
+	<!-- fst-div 닫는 div -->
+	<div class="col-lg-5 scd-div"></div>
+	</div>
+	<!-- page 닫는 div  -->
+	</c:when>
+	<c:when test="${pageCount == 3 || pageCount == 4}">
+		</div>
+		<!-- scd-div 닫는 div -->
+		</div>
+		<!-- page 닫는 div  -->
+	</c:when>
+	</c:choose>
+	</c:when>
+	</c:choose>
+	</c:when>
+	</c:choose>
+	</c:forEach>
+	</form>
+
+	<div class="col-lg-2 trd_div">
+		<!-- OMR 시작 div -->
+		<table class="tg">
+			<tr>
+				<th class="tg-baqh qname" colspan="6">답안지</th>
+			</tr>
+			<c:forEach var="question" items="${questionList}">
+				<tr>
+					<td class="tg-baqh qnumber">${question.exam_question_seq}</td>
+					<c:choose>
+						<c:when test="${question.question_type eq '객관식'}">
+							<c:set var="count" value="0" />
+							<c:forEach var="questionChoice" items="${questionChoiceList}"
+								varStatus="status">
+								<c:if
+									test="${questionChoice.question_num eq question.question_num}">
+									<td class="tg-baqh answer_choice">
+										<div class="wrap">
+											<img
+												class="answer_oximg_v oximg_v_ques_${question.exam_question_seq}"
+												id="ans_img_ques_${question.exam_question_seq}_${questionChoice.question_choice_num}"
+												src="${pageContext.request.contextPath}/img/oximg_v.png">
+										</div> ${questionChoice.question_choice_num} <c:set var="count"
+											value="${count+1 }" />
+									</td>
+								</c:if>
+							</c:forEach>
+							<c:forEach begin="${count}" end="4">
+								<td class="tg-baqh qname"></td>
+							</c:forEach>
+						</c:when>
+						<c:when test="${question.question_type eq '단답형'}">
+							<td class="tg-baqh answer_choice" colspan="5"><input
+								type="text" id="ques_${question.exam_question_seq}_answer"></td>
+						</c:when>
+					</c:choose>
+				</tr>
+			</c:forEach>
+		</table>
+		<br>
+	</div>
+	</div>
+
+	<div>
+		<div class="col-lg-10 pastExamBtnDiv">
+			<span id="prevPageSpan"></span> <span id="nextPageSpan"></span>
+		</div>
+		<div class="col-lg-2 pastExamBtnDiv2">
+			<se:authorize access="hasRole('ROLE_TEACHER')">
+				<button class="btn btn-theme03 exampaneldetailBtn"
+					id="examPaperExit">창 닫기</button>
+			</se:authorize>
+			<se:authorize access="hasRole('ROLE_STUDENT')">
+				<button class="btn btn-theme03 exampaneldetailBtn"
+					id="examPaperSubmit">제출하기</button>
+			</se:authorize>
 		</div>
 	</div>
-	
-<script>
-//남은시간 변화	
-	var remainPrint;
-	var remainTime;
-	//남은 시간 생성 함수
-	function msToTime() {
-		var now = new Date();
-		var dday = new Date(year,month-1,date,hour_ms_end,minute_ms_end,second_ms_end);
-		var remainTime = dday-now;
-		
-	   	var seconds = parseInt((remainTime / 1000) % 60),
-	    minutes = parseInt((remainTime / (1000 * 60)) % 60),
-	    hours = parseInt((remainTime / (1000 * 60 * 60)) % 24);
-	
-	  hours = (hours < 10) ? "0" + hours : hours;
-	  minutes = (minutes < 10) ? "0" + minutes : minutes;
-	  seconds = (seconds < 10) ? "0" + seconds : seconds;
-	
-	  remainPrint= hours + ":" + minutes + ":" + seconds;
-	  $("#remainTime").html(remainPrint);
-	  
-	  //남은 제한시간 0보다 작을 경우 종료
-	  if(remainTime<0){
-			clearInterval(interv);
-		}	  
-	}
-	//남은 시간 생성 함수 반복실행
-	var interv = window.setInterval("msToTime()", 1000);
-	
-</script>
+
+
+	</div>
+	</div>
+
+	<script>
+		//남은시간 변화	
+		var remainPrint;
+		var remainTime;
+		//남은 시간 생성 함수
+		function msToTime() {
+			var now = new Date();
+			var dday = new Date(year, month - 1, date, hour_ms_end,
+					minute_ms_end, second_ms_end);
+			var remainTime = dday - now;
+
+			var seconds = parseInt((remainTime / 1000) % 60), minutes = parseInt((remainTime / (1000 * 60)) % 60), hours = parseInt((remainTime / (1000 * 60 * 60)) % 24);
+
+			hours = (hours < 10) ? "0" + hours : hours;
+			minutes = (minutes < 10) ? "0" + minutes : minutes;
+			seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+			remainPrint = hours + ":" + minutes + ":" + seconds;
+			$("#remainTime").html(remainPrint);
+
+			//남은 제한시간 0보다 작을 경우 종료
+			if (remainTime < 0) {
+				clearInterval(interv);
+			}
+		}
+		//남은 시간 생성 함수 반복실행
+		var interv = window.setInterval("msToTime()", 1000);
+	</script>
 
 </body>
 </html>

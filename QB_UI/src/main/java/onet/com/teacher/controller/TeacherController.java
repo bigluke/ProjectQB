@@ -933,4 +933,56 @@ public class TeacherController {
 			
 			return "common.teacher.common.aboutUs";
 		}
+		
+		@RequestMapping("examPaperDo2.do")
+		public String examPaperDo2(Model model, int exam_info_num)
+				throws ClassNotFoundException, SQLException, IOException, ParseException {
+
+			ExamInfoDto exam_info = commonService.examScheduleDetail(exam_info_num);
+			String url = null;
+			// 현재 날짜 및 시간 추출
+			java.util.Date today = new java.util.Date();
+			SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+			String nowdate = date.format(today);
+			String nowTime = time.format(today);
+			// 시험일, 시험시작시간, 시험종료시간 선언 및 초기화
+			String exam_info_date = exam_info.getExam_info_date();
+			String exam_info_start = exam_info.getExam_info_start();
+			String exam_info_end = exam_info.getExam_info_end();
+
+			// 시험시작시각-현시각, 시험종료시각-현시각 정수로 변환
+			java.util.Date eis = time.parse(exam_info_start);
+			java.util.Date eie = time.parse(exam_info_end);
+			java.util.Date nowdt = time.parse(nowTime);
+
+			long examIn = eis.getTime() - nowdt.getTime();
+			long examOut = eie.getTime() - nowdt.getTime();
+
+			// 시험일 비교
+			if (nowdate.equals(exam_info_date)) {
+				// 시험시간 확인
+				if (examIn < 0 & 0 < examOut) {
+					model.addAttribute("exam_info", exam_info);
+
+					// 현이 10.17 추가
+					// 문제, 문제보기 리스트 뽑아옴
+					List<ExamPaperDoQuestionDto> questionList = commonService.examPaperDoQuestion(exam_info_num);
+					List<Question_choiceDto> questionChoiceList = commonService.examPaperDoQuestion_choice(exam_info_num);
+					int questionCount = commonService.questionCount(exam_info_num);
+
+					model.addAttribute("questionList", questionList);
+					model.addAttribute("questionChoiceList", questionChoiceList);
+					model.addAttribute("questionCount", questionCount);
+
+					url = "exam.student.examPaperDo2";
+				} else {
+					url = "exam.error.error403";
+				}
+			} else {
+				url = "exam.error.error403";
+			}
+
+			return url;
+		}
 }

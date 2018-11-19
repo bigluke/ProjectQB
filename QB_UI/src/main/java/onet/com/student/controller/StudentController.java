@@ -442,10 +442,7 @@ public class StudentController {
 	@RequestMapping(value = "examPaperDo2.do", method = RequestMethod.POST)
 	public String examAnswerInsert(Student_answerDtoList answerList)
 			throws ClassNotFoundException, SQLException, IOException {
-
-		// List<Student_answerDto> items = answerList.getStudent_answer();
 		int result = studentService.examAnswerInsert(answerList);
-
 		return "redirect:pastExam.do";
 
 	}
