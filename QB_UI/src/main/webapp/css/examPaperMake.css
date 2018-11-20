@@ -35,7 +35,7 @@
 
 #leftMakeExamDiv, #rightMakeExamDiv {
 	overflow-y: scroll;
-	height: 750px;
+	height: 760px;
 }
 
 .questionRowBtnDiv {
@@ -140,6 +140,9 @@ h3.logo span {
 	background-color: #f5f6f8;
 	margin-left : 3px;
 	box-shadow: -3px 0 0 0 #408aa5; 
+}
+.questionDiv.active{
+	background-color: #f5f6f8;
 }
 .hidden{
 	display : none;

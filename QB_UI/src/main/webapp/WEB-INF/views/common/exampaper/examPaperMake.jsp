@@ -376,65 +376,41 @@
 													});
 										});
 						//시험지 만들기 클릭 디자인 토글
-						$(document)
-								.on(
-										'click',
-										'.questionDiv',
-										function() {
-											var tt = $(this).children()
-													.children().eq(0);
-											var checkimg = "${pageContext.request.contextPath}/img/qcheck.png";
-											var cancelimg = "";
-											var backimg = $(this).children(
-													'img').attr('src');
-											if (backimg == cancelimg) {
-												$(this).children('img')
-														.toggleClass("active");
-												$(this).children('img').attr(
-														'src', checkimg);
-												$(this).toggleClass("active");
-												tt.prop('checked', !(tt
-														.is(':checked')));
-											} else {
-												$(this).children('img')
-														.toggleClass("active");
-												$(this).children('img').attr(
-														'src', cancelimg);
-												$(this).toggleClass("active");
-												tt.prop('checked', !(tt
-														.is(':checked')));
-											}
-
-										});
-						$(document)
-								.on(
-										'click',
-										'.questionDivRight',
-										function() {
-											var tt = $(this).children()
-													.children().eq(0);
-											var deleteimg = "${pageContext.request.contextPath}/img/qdelete3.png";
-											var cancelimg = "";
-											var backimg = $(this).children(
-													'img').attr('src');
-											if (backimg == cancelimg) {
-												$(this).children('img')
-														.toggleClass("active");
-												$(this).children('img').attr(
-														'src', deleteimg);
-												$(this).toggleClass("active");
-												tt.prop('checked', !(tt
-														.is(':checked')));
-											} else {
-												$(this).children('img')
-														.toggleClass("active");
-												$(this).children('img').attr(
-														'src', cancelimg);
-												$(this).toggleClass("active");
-												tt.prop('checked', !(tt
-														.is(':checked')));
-											}
-										});
+						$(document).on('click', '.questionDiv', function(){		
+							var tt = $(this).children().children().eq(0);
+							var checkimg = "${pageContext.request.contextPath}/img/qcheck.png";
+							var cancelimg = "";
+							var backimg = $(this).children('img').attr('src');
+							if(backimg == cancelimg){
+								$(this).children('img').toggleClass("active");
+								$(this).children('img').attr('src',checkimg);	
+								$(this).toggleClass("active");
+								tt.prop('checked', !(tt.is(':checked')));
+							}else{
+								$(this).children('img').toggleClass("active");
+								$(this).children('img').attr('src',cancelimg);
+								$(this).toggleClass("active");
+								tt.prop('checked', !(tt.is(':checked')));
+							}
+							
+						});
+						$(document).on('click', '.questionDivRight', function(){
+							var tt = $(this).children().children().eq(0);
+							var deleteimg = "${pageContext.request.contextPath}/img/qdelete3.png";
+							var cancelimg = "";
+							var backimg = $(this).children('img').attr('src');
+							if(backimg == cancelimg){
+								$(this).children('img').toggleClass("active");
+								$(this).children('img').attr('src',deleteimg);
+								$(this).parents().toggleClass("active");
+								tt.prop('checked', !(tt.is(':checked')));
+							}else{
+								$(this).children('img').toggleClass("active");
+								$(this).children('img').attr('src',cancelimg);
+								$(this).parents().toggleClass("active");
+								tt.prop('checked', !(tt.is(':checked')));
+							}
+						});
 					});
 </script>
 
