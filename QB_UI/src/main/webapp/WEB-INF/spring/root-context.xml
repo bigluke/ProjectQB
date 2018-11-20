@@ -27,7 +27,7 @@
 
 
 
-
+<!-- 
     <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mariadb://127.0.0.1:3306/onet?allowMultiQueries=true"></property>
@@ -36,12 +36,12 @@
 	</bean>
 
 
-
+ -->
 
 
   	<!-- 실제 샘플데이터 구축 -->
   	
-<!-- 
+
 	<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mariadb://192.168.0.101:3306/onet_qb?allowMultiQueries=true"></property>
@@ -49,7 +49,6 @@
 		<property name="password" value="1004"></property>
 	</bean>   
 
- -->
 	<bean id="" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="driverManagerDataSource"></property>
 	</bean>
