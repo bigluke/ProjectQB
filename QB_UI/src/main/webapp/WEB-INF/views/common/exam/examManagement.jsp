@@ -238,6 +238,7 @@ $(document).ready(function(){
 	if(role == 'ROLE_TEACHER'){
 	imsiSaveExam(tempExam);
 	}
+	examinfolistClass(classParam2);
 	examlistClass(classParam);	
 	
 	
@@ -255,6 +256,10 @@ $(document).ready(function(){
 	        	 
 				classParam.begin += 5;
 	        	examlistClass(classParam);
+	        	
+	        	classParam2.begin += 5;
+				examinfolistClass(classParam2);
+				
 				if(role == 'ROLE_TEACHER'){
 					tempExam.begin += 5;
 					imsiSaveExam(tempExam);
@@ -317,7 +322,7 @@ $(document).ready(function(){
 	});
 });
 
-$('#examinfotab').click(function(){
+/* $('#examinfotab').click(function(){
 	var lastScrollTop = 0;
 	examinfolistClass(classParam2);
 	$(window).scroll(function(){
@@ -333,7 +338,7 @@ $('#examinfotab').click(function(){
 			 }
 		  }
 	});	
-});
+}); */
 
 	//클래스 목록 가져오는 ajax
 	function examlistClass(classParam){

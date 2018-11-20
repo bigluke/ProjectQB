@@ -431,7 +431,7 @@ public class TeacherService {
 		 */
 		
 		// 하단의 주석 풀고 문자 테스트 해주세요. 
-		String api_key = "NCSWVEGBC6I60DAJ";
+		/*String api_key = "NCSWVEGBC6I60DAJ";
 		String api_secret = "5VAQOBUGYAHWXEHJDODJNYWKZ0KDCVGY";
 		Coolsms coolsms = new Coolsms(api_key, api_secret);
 		 
@@ -457,7 +457,7 @@ public class TeacherService {
 			System.out.println("실패");
 			System.out.println(result.get("code")); // REST API 에러코드
 			System.out.println(result.get("message")); // 에러메시지
-		}
+		}*/
 
 	}
 
