@@ -33,7 +33,7 @@
  	var pageNo = 1;
 	var rowPerPage = 4;
 	var begin = (pageNo - 1) * rowPerPage + 1;	// 문제의 시작 rownum, 1부터 시작한다 
-	var totalRows = ${questionCount};	//	한 시험지의 전체 문제 개수 
+	var totalRows = ${questionCount};	//	한 시험지의 전체 문제 개수  
 	var totalPages = Math.ceil(totalRows / rowPerPage);
 	
 	var memberId;//line 34?
