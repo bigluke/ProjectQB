@@ -131,8 +131,10 @@
 												<label class="col-sm-2 col-sm-2 control-label">클래스명</label>
 												<div class="col-sm-10">
 													<input type="text" class="form-control"
-														id="class_name_update" name="class_name" required>
+														id="class_name_update" name="class_name" onblur="confirmClass2()" required>
+														<div id="classdiv2"></div>
 												</div>
+												
 											</div>
 											<div class="form-group">
 												<label class="col-sm-2 col-sm-2 control-label">수강기간</label>
@@ -161,7 +163,7 @@
 										<div class="modal-footer">
 											<button type="button" class="btn btn-default"
 												data-dismiss="modal">취소</button>
-											<button type="submit" class="btn btn-theme"
+											<button type="button" class="btn btn-theme"
 												id="updateClassBtn">수정</button>
 										</div>
 									</form>
@@ -319,6 +321,33 @@ $(document).ready(function(){
 	}
 	});
 	
+	var classcheck2 = false;	
+	$('#updateClassBtn').click(function(){
+		if(classcheck2 == false){
+			swal("클래스 명을 확인해주세요");
+			$("#class_name_update").focus();
+			return false;
+		} else if(classcheck2 == true){
+			swal({
+		           title: "클래스를 수정하시겠습니까?",
+		           icon: "info",
+		           buttons: true,
+		           dangerMode: true
+		      }).then((willDelete) => { 
+		        if (willDelete) {
+		            swal({
+		                 title: "클래스가 수정되었습니다.",
+		                  text: "",
+		                  icon:"success"
+		               }).then(function() {
+		                  $('#updateClassForm').submit();
+		            });
+		          
+		        } else {
+		        }
+		   });
+	}
+	});
 	
 
 	function confirmClass() {
@@ -351,7 +380,36 @@ $(document).ready(function(){
 			});
 		}
 	}
-	
+	function confirmClass2() {
+		
+		var val = $("#class_name_update").val();
+		var iddiv = $("#classdiv2");
+		if (val == "") {
+			iddiv.html("클래스를 입력해주세요.");
+			$('#classdiv2').css("color", "green");
+			classcheck2 = false;
+
+		} else {
+			$.ajax({
+				url : 'classCheck.do',
+				data : {
+					'class_name' : val
+				},
+				dataType : 'json',
+				success : function(data) {
+					if (data.result == true) {
+						iddiv.html("사용가능한 클래스 입니다.");
+						$('#classdiv2').css("color", "green");
+						classcheck2 = true;
+					} else {
+						iddiv.html("사용 불가능한 클래스 입니다.");
+						$('#classdiv2').css("color", "red");
+						classcheck2 = false;
+					}
+				}
+			});
+		}
+	}
 	
 	var dateFormat = "yy-mm-dd",
     from = $( ".class_start_date" )

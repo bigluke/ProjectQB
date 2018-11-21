@@ -23,11 +23,6 @@
 		</property>
 	</bean>
 	
-
-
-
-
-
     <!-- <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mariadb://192.168.0.101:3306/onetuser?allowMultiQueries=true"></property>
@@ -36,17 +31,14 @@
 	</bean>   -->
 
 
-
-
-
   	<!-- 실제 샘플데이터 구축 -->
   	
 
 	<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 		<property name="driverClass" value="org.mariadb.jdbc.Driver"></property>
-		<property name="url" value="jdbc:mariadb://192.168.0.101:3306/onet_qb?allowMultiQueries=true"></property>
-		<property name="username" value="onetuser"></property>
-		<property name="password" value="1004"></property>
+		<property name="url" value="jdbc:mariadb://qb-db.cyddw2wdt0lg.ap-northeast-2.rds.amazonaws.com:3306/QB_AWS?allowMultiQueries=true"></property>
+		<property name="username" value="qb"></property>
+		<property name="password" value="qbqb1004"></property>
 	</bean>   
 
 

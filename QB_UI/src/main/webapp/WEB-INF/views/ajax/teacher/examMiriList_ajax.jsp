@@ -93,7 +93,7 @@ h3.logo span {
 				</c:if>
 			</c:forEach>				
 		</table>
-	<c:if test="${status.index%6 eq 5 }">
+	<c:if test="${status.index%6 eq 5 }"> 
 	</div><div class="endline"></div><br style="height:0; line-height:0">
 	</c:if>
 	</c:forEach>

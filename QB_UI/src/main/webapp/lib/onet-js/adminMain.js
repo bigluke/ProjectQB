@@ -35,9 +35,6 @@ $(function() {
  		$('#teacher_name_update').val(teacher_name);
 	});
 	
-	// updateClass Form 전송 
-	$('#updateClassBtn').click(function(){
-		$('#updateClassForm').submit();
-	});
+
 	
 });
