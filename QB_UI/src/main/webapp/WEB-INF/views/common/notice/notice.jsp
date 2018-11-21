@@ -55,6 +55,25 @@
 									</tr>
 								</thead>
 								<tbody>
+								<se:authorize access="hasRole('ROLE_ADMIN')">
+									<c:forEach items="${notice}" var="notice">
+										<tr class="notice_tr" onClick="location.href='noticeDetail.do?class_name=${notice.class_name}&notice_num=${notice.notice_num}&class_num=${class_num}'">
+											<td class="notice_num">${notice.notice_num}</td>
+											<td class="notice_name">${notice.notice_name}</td>
+											<c:choose>
+											<c:when test="${empty notice.notice_file1 && empty notice.notice_file2}">
+											<td class="notice_file"></td>
+											</c:when>
+											<c:when test="${not empty notice.notice_file1 || not empty notice.notice_file2}">
+											<td class="notice_file"><i class="fa fa-paperclip"></i></td>
+											</c:when>
+											</c:choose>
+											<td class="notice_member_id">${notice.member_name} [${notice.member_id}]</td>
+											<td class="notice_date">${notice.notice_date}</td>
+										</tr>
+									</c:forEach>
+								</se:authorize>	
+								<se:authorize access="hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')">
 									<c:forEach items="${notice}" var="notice">
 										<tr class="notice_tr" onClick="location.href='noticeDetail.do?class_name=${notice.class_name}&notice_num=${notice.notice_num}'">
 											<td class="notice_num">${notice.notice_num}</td>
@@ -71,6 +90,7 @@
 											<td class="notice_date">${notice.notice_date}</td>
 										</tr>
 									</c:forEach>
+								</se:authorize>	
 								</tbody>
 							</table>
 							<div>

@@ -65,7 +65,7 @@
             url : '${pageContext.request.contextPath}/index/mail.do',
             data : {
             	mailto:$('#member_email').val(),
-            	command:"findPw",
+            	command:"findId",
             	member_id:member_id
             	},
             success : function(data) {

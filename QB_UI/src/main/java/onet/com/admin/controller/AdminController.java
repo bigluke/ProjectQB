@@ -389,7 +389,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("noticeDetail.do")
-	public String noticeDetail(Model model, String class_name, int notice_num, Principal principal) {
+	public String noticeDetail(Model model, String class_name, int notice_num, int class_num, Principal principal) {
 		List<NoticeDto> result = commonService.noticeDetail(class_name, notice_num);
 		 for(int i=0; i<result.size(); i++) {
 	    	 String date = result.get(i).getNotice_date().substring(0, result.get(i).getNotice_date().length()-5);
@@ -418,6 +418,8 @@ public class AdminController {
 			model.addAttribute("originFileName2",originFileName2);
 		}
 		String name = principal.getName();
+		
+		model.addAttribute("class_num", class_num);
 		model.addAttribute("result", result);
 		model.addAttribute("comment", comment);
 		model.addAttribute("commentGroup", commentGroup);
@@ -428,14 +430,13 @@ public class AdminController {
 	
 	@RequestMapping("noticeWrite.do")
 	public String noticeWrite(String class_name, String class_num, Model model) {
-		
 		model.addAttribute("class_num", class_num);
 		model.addAttribute("class_name",class_name);
 		return "common.adminClass.admin.notice.noticeWrite";
 	}
 
 	@RequestMapping("noticeUpdate.do")
-	public String noticeUpdate(Model model,int notice_num, String class_name) {
+	public String noticeUpdate(Model model,int notice_num, String class_name, int class_num) {
 		NoticeDto dto = new NoticeDto();
 		dto.setNotice_num(notice_num);
 		dto.setClass_name(class_name);
@@ -461,6 +462,7 @@ public class AdminController {
 			model.addAttribute("originFileName2",originFileName2);
 		}
 		
+		model.addAttribute("class_num", class_num);
 		model.addAttribute("result",result);
 		return "common.adminClass.admin.notice.noticeUpdate";
 	}
@@ -987,6 +989,7 @@ public class AdminController {
 	
 	@RequestMapping(value="noticeView.do", method=RequestMethod.POST)
 	public String noticeWrite(NoticeDto dto, Principal principal,MultipartHttpServletRequest request, RedirectAttributes red) throws Exception {
+		
 		String member_id = principal.getName();
 		dto.setMember_id(member_id);
 		long time = System.currentTimeMillis(); 
@@ -1022,8 +1025,7 @@ public class AdminController {
 		}
 		int result = commonService.insertBoardList(dto);
 		String class_name = dto.getClass_name();
-		/*int class_num = adminService.checkClassNum(class_name);
-		red.addAttribute("class_num", class_num);*/
+		red.addAttribute("class_num", dto.getClass_num());
 		red.addAttribute("class_name", class_name);
 		return "redirect:adminClassMain.do";
 	}
@@ -1072,17 +1074,20 @@ public class AdminController {
 		}else {
 			commonService.updateNoBoardList(dto);
 		}
+		
+		red.addAttribute("class_num", dto.getClass_num());
 		red.addAttribute("class_name", class_name);
 		red.addAttribute("notice_num", notice_num);
 		return "redirect:noticeDetail.do";
 	}
 	
 	@RequestMapping("noticeDelete.do")
-	public String noticeDelete(Model model,int notice_num, String class_name, RedirectAttributes red) {
+	public String noticeDelete(Model model,int notice_num, String class_name, int class_num, RedirectAttributes red) {
 		NoticeDto dto = new NoticeDto();
 		dto.setNotice_num(notice_num);
 		dto.setClass_name(class_name);
 		int result = commonService.noticeDelete(dto);
+		red.addAttribute("class_num", class_num);
 		red.addAttribute("class_name", class_name);
 		return "redirect:adminClassMain.do";
 	}

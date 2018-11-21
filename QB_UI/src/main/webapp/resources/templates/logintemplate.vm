@@ -111,7 +111,7 @@ img {
                 <br>
             </div>
             <div style="width:200px; border-top:1px dotted #d9d9d9;border-bottom:1px solid #d9d9d9;text-align: center; margin:auto; color: #1a1a1a; padding: 20px;">
-                    임시 비밀번호<br><b style="color:#063f54; font-size: 20px;">${randomNum}</b>
+                    임시 비밀번호<br><b style="color:#063f54; font-size: 20px;">${randomPwd}</b>
                 </div>
             <div style="margin:30px auto 10px auto; padding: 10px;">
             임시 비밀번호로 로그인 하신 후<br> 개인정보를 수정해 주시기 바랍니다.

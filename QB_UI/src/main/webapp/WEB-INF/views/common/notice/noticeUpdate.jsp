@@ -28,8 +28,8 @@
 	width:100%;
 }
 .noticeUpdateButton{
-	background: #FFB400;
-	border-color: #FFB400;
+	background: #337ab7;
+	border-color: #337ab7;
 	width:100px;
 }
 
@@ -121,6 +121,7 @@
 											
 											<input type="hidden" id="class_name" name="class_name" value="${result[0].class_name}">
 											<input type="hidden" id="notice_num" name="notice_num" value="${result[0].notice_num}">
+											<input type="hidden" name="class_num" value="${class_num}">
 											
 											<c:choose>
 												<c:when test="${empty result[0].notice_file1 && empty result[0].notice_file2}">
@@ -152,12 +153,12 @@
 									<tr>
 										<td class="fst_td"></td>
 										<td colspan="2">
-											<button type="submit" id="btnupdate" class="btn btn-warning noticeUpdateButton">수정</button>&nbsp;&nbsp;
+											<button type="submit" id="btnupdate" class="btn btn-info noticeUpdateButton">수정</button>&nbsp;&nbsp;
 											<se:authorize access="hasRole('ROLE_TEACHER')">
 											<a href="teacherMain.do"><input type="button" class="btn btn-theme04 noticeCancelButton" value="취소" /></a>
 											</se:authorize>
 											<se:authorize access="hasRole('ROLE_ADMIN')">
-											<a href="adminClassMain.do?class_name=${result[0].class_name}"><input type="button" class="btn btn-theme04 noticeCancelButton" value="취소" /></a>
+											<a href="adminClassMain.do?class_name=${result[0].class_name}&class_num=${class_num}"><input type="button" class="btn btn-theme04 noticeCancelButton" value="취소" /></a>
 											</se:authorize>
 											<!-- <button class="btn btn-info">취소</button> -->
 										</td>

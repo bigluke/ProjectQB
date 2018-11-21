@@ -72,6 +72,7 @@
 											<input type="file" id="txtFile2" name="files2" />
 											</div>
 											<input type="hidden" id="class_name" name="class_name" value="${class_name}">
+											<input type="hidden" name="class_num" value="${class_num}">
 										</td>
 									</tr>
 									<tr>

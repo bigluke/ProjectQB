@@ -9,27 +9,27 @@
 
 	<security:http auto-config="true" use-expressions="true">
 		<security:csrf disabled="true" />
-<!-- 		<security:intercept-url pattern="/admin/**"
+		<security:intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/student/**"
 			access="hasRole('ROLE_STUDENT')" />
 		<security:intercept-url pattern="/teacher/**"
 			access="hasRole('ROLE_TEACHER')" />
 		<security:intercept-url pattern="/index/noAuth.do"
-			access="hasRole('ROLE_MEMBER')" /> -->
+			access="hasRole('ROLE_MEMBER')" />
 		
 
 		<security:form-login
 			username-parameter="member_id" password-parameter="member_pwd"
-			login-page="/login.jsp"
+			login-page="/index/login.do"
 			authentication-failure-handler-ref="loginFailureHandler"
 			authentication-success-handler-ref="loginSuccessHandler"
 			 />
-		<security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/login.jsp" />
+		<security:logout logout-url="/logout" invalidate-session="true" logout-success-url="/index/login.do" />
 		<security:session-management
-			invalid-session-url="/login.jsp">
+			invalid-session-url="/index/login.do">
 			<security:concurrency-control
-				max-sessions="1" expired-url="/login.jsp" />
+				max-sessions="1" expired-url="/index/login.do" />
 		</security:session-management>
     
    

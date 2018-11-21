@@ -126,9 +126,10 @@ public class IndexController {
 		return randomNum;
 	}
 
-	@RequestMapping("lockLogin.do")
-	public String lockLogin(Model model) {
-		return "home.lockLogin";
+	@RequestMapping("login.do")
+	public String login() {
+		return "redirect:/login.jsp";
 	}
+
 	
 }

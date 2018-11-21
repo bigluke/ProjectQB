@@ -147,13 +147,17 @@
 							<a href="teacherMain.do" class="btn btn-theme noticeListbutton">글 목록</a>
 							</se:authorize>
 							<se:authorize access="hasRole('ROLE_ADMIN')">
-							<a href="adminClassMain.do?class_name=${result[0].class_name}" class="btn btn-theme noticeListbutton">글 목록</a>
+							<a href="adminClassMain.do?class_name=${result[0].class_name}&class_num=${class_num}" class="btn btn-theme noticeListbutton">글 목록</a>
 							</se:authorize>
 							<se:authorize access="hasRole('ROLE_STUDENT')">
 							<a href="studentMain.do" class="btn btn-theme noticeListbutton">글 목록</a>
 							</se:authorize>
-							<se:authorize access="hasRole('ROLE_TEACHER') OR hasRole('ROLE_ADMIN')">
-							<button type="button" id="updateNotice"class="btn btn-info noticeUpdatebutton">글 수정</button>
+							<se:authorize access="hasRole('ROLE_TEACHER')">
+							<button type="button" id="updateNotice" class="btn btn-info noticeUpdatebutton">글 수정</button>
+							<button type="button" data-toggle="modal" data-target="#DeleteModal" class="btn btn-theme04 noticeDeletebutton">글 삭제</button>
+							</se:authorize>
+							<se:authorize access="hasRole('ROLE_ADMIN')">
+							<button type="button" id="updateNoticeADMIN" class="btn btn-info noticeUpdatebutton">글 수정</button>
 							<button type="button" data-toggle="modal" data-target="#DeleteModal" class="btn btn-theme04 noticeDeletebutton">글 삭제</button>
 							</se:authorize>
 							</div>
@@ -184,7 +188,13 @@
 							<div class="modal-footer">
 								<div class="form-group">
 									<div class="col-lg-offset-2 col-lg-10">
+										<se:authorize access="hasRole('ROLE_ADMIN')">
+										<button id="deleteNoticeADMIN" class="btn btn-theme" value="">확인</button>
+										</se:authorize>
+										<se:authorize access="hasRole('ROLE_TEACHER')">
 										<button id="deleteNotice" class="btn btn-theme" value="">확인</button>
+										</se:authorize>
+										
 										<button class="btn btn-theme04" type="button"
 											data-dismiss="modal">취소</button>
 									</div>
@@ -458,8 +468,19 @@ $(document).ready(function(){
 		location.href="noticeUpdate.do?notice_num="+notice_num+"&class_name="+class_name;
 	});
 	
+	
+	$(document).on('click','#updateNoticeADMIN',function(){
+		location.href="noticeUpdate.do?notice_num="+notice_num+"&class_name="+class_name+"&class_num=${class_num}";
+	});
+	
+	
 	$('#deleteNotice').click(function(){
 		location.href="noticeDelete.do?notice_num="+notice_num+"&class_name="+class_name;
+		
+	});
+	
+	$('#deleteNoticeADMIN').click(function(){
+		location.href="noticeDelete.do?notice_num="+notice_num+"&class_name="+class_name+"&class_num=${class_num}";
 		
 	});
 	
