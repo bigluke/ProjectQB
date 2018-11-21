@@ -69,7 +69,7 @@
 											<div class="form-group">
 												<label class="col-sm-2 col-sm-2 control-label">클래스명</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control"
+													<input type="text" autocomplete="off" class="form-control"
 														placeholder="클래스 명을 입력해주세요." id="class_name"
 														name="class_name" onblur="confirmClass()">
 													<div id="classdiv"></div>
@@ -95,7 +95,7 @@
 											<div class="form-group">
 												<label class="col-sm-2 col-sm-2 control-label">강사명</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control"
+													<input type="text" class="form-control" autocomplete="off"
 														placeholder="강사님 이름을 입력해주세요." id="teacher_name"
 														name="teacher_name">
 												</div>

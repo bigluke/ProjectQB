@@ -705,13 +705,29 @@ $(document).ready(function(){
 		
 	/*지난 시험지 보기*/
 
-	$(document).on('click', '#pastExamBtn', function(){	//	ajax로 가져온 버튼이 안 먹을 때 click 이벤트
-		var getAreaStart =$("#tab2_studentName").text().indexOf("(");
-		var getAreaEnd =$("#tab2_studentName").text().indexOf(")");
-		var getId=$("#tab2_studentName").text().substring(getAreaStart+1, getAreaEnd);
-		var popUrl = "pastExamPaper.do?exam_info_num=" + $(this).val()+"&member_id="+getId;
-		var popOption = "width=1000px, resizable=no, location=no, left=50px, top=100px";
-		window.open(popUrl, "지난 시험보기",popOption);		
+	$(document).on('click', '#pastExamBtn', function(){	//	ajax로 가져온 버튼이 안 먹을 때 click 이벤트		
+		var now = new Date().getTime();  //  현재 시간을 timestamp으로 계산
+		var examEndTime = $(this).parent().prev().children().eq(2).text().trim();	//	시험 종료 시간을 timestamp 으로 계산		
+		var EndDate = examEndTime.substr(8,10);		
+		var EndTime = examEndTime.substr(-9, 8);
+		
+		var year = EndDate.substr(0,4);
+		var month = EndDate.substr(5,2);
+		var day = EndDate.substr(8,2);
+		var hour = EndTime.substr(0, 2);
+		var minute = EndTime.substr(3, 2);
+		var examEndTimeTs = new Date(year, month-1, day, hour, minute).getTime();
+		
+		 if( examEndTimeTs < now ){   // 지난 시험 열람 가능
+			var getAreaStart =$("#tab2_studentName").text().indexOf("(");
+			var getAreaEnd =$("#tab2_studentName").text().indexOf(")");
+			var getId=$("#tab2_studentName").text().substring(getAreaStart+1, getAreaEnd);
+			var popUrl = "pastExamPaper.do?exam_info_num=" + $(this).val()+"&member_id="+getId;
+			var popOption = "width=1000px, resizable=no, location=no, left=50px, top=100px";
+			window.open(popUrl, "지난 시험보기",popOption);	
+		   } else if ( examEndTimeTs > now ){	//	시험 응시 시간이 지나지 않았다면 열람 불가능
+			swal("\n시험 시간이 종료되고 열람이 가능합니다.");
+		 }   
 	});
 	
 	//첫화면 차트

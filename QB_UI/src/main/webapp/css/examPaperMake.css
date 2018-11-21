@@ -30,12 +30,12 @@
 	width: 80%;
 }
 .questionChoiceImg {
-	width: 90%;
+	width: 45%;
 }
 
 #leftMakeExamDiv, #rightMakeExamDiv {
 	overflow-y: scroll;
-	height: 750px;
+	height: 760px;
 }
 
 .questionRowBtnDiv {
@@ -134,18 +134,15 @@ h3.logo span {
 	cursor : pointer;
 	border : 1px solid #F6F6F6;
 	background-image: url('');
-}
-.questionDiv.active{
-	background-image: url('../img/qcheck.png');
-	background-color: #f5f6f8;
-	background-size: 20%;
-	background-repeat: no-repeat;
-	background-position: center center;	
+	position:relative;
 }
 .questionDiv:hover{
 	background-color: #f5f6f8;
 	margin-left : 3px;
 	box-shadow: -3px 0 0 0 #408aa5; 
+}
+.questionDiv.active{
+	background-color: #f5f6f8;
 }
 .hidden{
 	display : none;
@@ -180,19 +177,11 @@ h3.logo span {
 	box-shadow: -3px 0 0 0 #408aa5;
 }
 .liright.active{
-	background-image: url('../img/qdelete3.png');
 	background-color: #f5f6f8;
-	background-size: 20%;
-	background-repeat: no-repeat;
-	background-position: center center;
-}
+} 
 .div-title{
-	/* border-radius: 10px 10px 10px 10px; */
 	padding : 10px;
-	/* margin : 10px; */
-	/* background-color:#F6F6F6; */
 	margin-bottom : 10px;
-	/* box-shadow: 0px 0px 5px 0px grey; */
 	border-bottom:1px solid black;
 	height:180px;
 }
@@ -203,4 +192,16 @@ h3.logo span {
 	background: #ffffff;
 	box-shadow: 0px 3px 2px #aab2bd;
 	padding: 0px 20px 5px 10px;
+}
+.check-img{
+    display:none;
+}
+.check-img.active{
+	position:absolute;
+	width:27%;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+    z-index:5;
+    display:block;
 }

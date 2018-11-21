@@ -205,7 +205,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	from score_chart sc join class_chart cc join exam_info ei join member m
 	on sc.exam_info_num = cc.exam_info_num and sc.exam_info_num=ei.exam_info_num and sc.member_id=m.member_id
 	where sc.member_id=#{member_id} and sc.class_name=(select class_name from member where member_id=#{member_id})
-	and (ei.exam_info_date < sysdate()) and not sc.score_chart_rank=0
+	and (ei.exam_info_date < date_add(sysdate(), interval -1 day)) and not sc.score_chart_rank=0
 	order by m.member_name, sc.exam_info_num asc
 	]]>
 </select>
@@ -216,7 +216,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	from class_chart c join exam_info ei
 	on c.exam_info_num=ei.exam_info_num
 	where c.class_name=#{class_name}
-	and (ei.exam_info_date < sysdate())
+	and (ei.exam_info_date < date_add(sysdate(), interval -1 day))
 	order by exam_info_num asc
 	]]>
 </select>
@@ -228,7 +228,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	ei.exam_info_end, ei.exam_info_time, ep.exam_paper_desc, m.member_name
 	FROM score_chart sc JOIN exam_info ei JOIN exam_paper ep JOIN member m
 	ON sc.exam_info_num=ei.exam_info_num and ei.exam_paper_num = ep.exam_paper_num and sc.member_id=m.member_id
-	WHERE m.member_id = #{param1} and ei.class_name = #{param2} and (ei.exam_info_date < sysdate())
+	WHERE m.member_id = #{param1} and ei.class_name = #{param2} and (ei.exam_info_date < date_add(sysdate(), interval -1 day))
 	order by exam_info_num desc
 	]]>
 </select>
@@ -240,7 +240,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	ON m.member_id=sa.member_id and sa.exam_info_num=ei.exam_info_num and ei.exam_paper_num= eq.exam_paper_num 
 	and eq.question_num = q.question_num and q.sm_category_code = qsc.sm_category_code
 	WHERE m.member_id = #{param1} and ei.class_name = #{param2}
-	and (ei.exam_info_date < sysdate())
+	and (ei.exam_info_date < date_add(sysdate(), interval -1 day))
 	order by sa.exam_info_num, qsc.sm_category_code asc
 	]]>
 </select>
@@ -251,7 +251,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	from score_chart sc join member m join exam_info ei
 	on sc.member_id=m.member_id and sc.exam_info_num = ei.exam_info_num
 	where sc.class_name = #{class_name}
-	and (ei.exam_info_date < sysdate())
+	and (ei.exam_info_date < date_add(sysdate(), interval -1 day))
 	order by m.member_name, sc.exam_info_num asc
 	]]>
 </select>
@@ -262,7 +262,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	from score_chart sc join member m join exam_info ei
 	on sc.member_id = m.member_id and sc.exam_info_num = ei.exam_info_num
 	where  sc.class_name = #{class_name}
-	and (ei.exam_info_date < sysdate())
+	and (ei.exam_info_date < date_add(sysdate(), interval -1 day))
 	group by sc.member_id
 	order by m.member_name, sc.exam_info_num asc
 	]]>
@@ -275,7 +275,7 @@ select * from question qs join question_sm_category sm on (qs.sm_category_code =
 	from score_chart sc join exam_info ei
 	on sc.exam_info_num = ei.exam_info_num
 	where sc.class_name= #{class_name} 
-	and (ei.exam_info_date < sysdate())
+	and (ei.exam_info_date < date_add(sysdate(), interval -1 day))
 	group by sc.exam_info_num
 	order by sc.exam_info_num asc
 	]]>

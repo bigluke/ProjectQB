@@ -99,6 +99,7 @@
 											<input type="checkbox" value="${examquestion.question_num }"
 												name="checkbox[]" class="hidden"/>
 										</div>
+										<img src="" class="check-img">
 										<div class="col-lg-3 questionInfo">
 											${examquestion.md_category_name}<br> ${examquestion.sm_category_name }<br>
 											난이도: ${examquestion.level_name}<br> 정답:
@@ -119,9 +120,13 @@
 											<br>
 											<div>
 												<c:forEach items="${examquestion_choice}" var="examquestion_choice">
-													<c:if
-														test="${examquestion_choice.question_num eq examquestion.question_num}">
-														<p>${examquestion_choice.question_choice_num}.${examquestion_choice.question_choice_content}</p>
+													<c:if test="${examquestion_choice.question_num eq examquestion.question_num}">
+														<c:if test="${examquestion_choice.question_choice_image ne null }">
+															<p>${examquestion_choice.question_choice_num})&nbsp; ${examquestion_choice.question_choice_content} <br><img src="${pageContext.request.contextPath}/upload/question/${examquestion_choice.question_choice_image}" alt="NoImg" class="questionChoiceImg" /></p>
+														</c:if>
+														<c:if test="${examquestion_choice.question_choice_image eq null }">
+															<p>${examquestion_choice.question_choice_num})&nbsp; ${examquestion_choice.question_choice_content}</p>
+														</c:if>
 													</c:if>
 												</c:forEach>
 											</div>
@@ -264,15 +269,40 @@ $(document).ready(function(){
 		   });
    });
  //시험지 만들기 클릭 디자인 토글
-	$(document).on('click', '.questionDiv', function(){
+   $(document).on('click', '.questionDiv', function(){		
 		var tt = $(this).children().children().eq(0);
-		$(this).toggleClass("active");
-		tt.prop('checked', !(tt.is(':checked')));
+		var checkimg = "${pageContext.request.contextPath}/img/qcheck.png";
+		var cancelimg = "";
+		var backimg = $(this).children('img').attr('src');
+		if(backimg == cancelimg){
+			$(this).children('img').toggleClass("active");
+			$(this).children('img').attr('src',checkimg);	
+			$(this).toggleClass("active");
+			tt.prop('checked', !(tt.is(':checked')));
+		}else{
+			$(this).children('img').toggleClass("active");
+			$(this).children('img').attr('src',cancelimg);
+			$(this).toggleClass("active");
+			tt.prop('checked', !(tt.is(':checked')));
+		}
+		
 	});
 	$(document).on('click', '.questionDivRight', function(){
 		var tt = $(this).children().children().eq(0);
-		$(this).parents().toggleClass("active");
-		tt.prop('checked', !(tt.is(':checked')));
+		var deleteimg = "${pageContext.request.contextPath}/img/qdelete3.png";
+		var cancelimg = "";
+		var backimg = $(this).children('img').attr('src');
+		if(backimg == cancelimg){
+			$(this).children('img').toggleClass("active");
+			$(this).children('img').attr('src',deleteimg);
+			$(this).parents().toggleClass("active");
+			tt.prop('checked', !(tt.is(':checked')));
+		}else{
+			$(this).children('img').toggleClass("active");
+			$(this).children('img').attr('src',cancelimg);
+			$(this).parents().toggleClass("active");
+			tt.prop('checked', !(tt.is(':checked')));
+		}
 	});
 })
 

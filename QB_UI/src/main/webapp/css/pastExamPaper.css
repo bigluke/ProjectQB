@@ -207,14 +207,15 @@
     
     /* 문제 보기에서 이미지 크기 조절 */
     .answer_choice_image {
-    	width: 500px;
+    	width: 30%;
     	margin-bottom: 10px;
+    	margin-left: 7%;
     }
     
     
     /* 10.24 pastExamPaper 페이지 css 추가 */
     /* 문제 정답/오답 이미지 표기 */
-    .oximg_s, .oximg_o {	
+    .oximg_s, .oximg_o {
     	position: absolute;
 	    width: 70px;
 	    height: 70px;

@@ -14,6 +14,8 @@
 					<input type="checkbox" value="${question.question_num }"
 						name="checkbox[]" class="hidden"/>
 				</div>
+				<!-- background img -->
+				<img src="" class="check-img">
 				<div class="col-lg-3 questionInfo">
 					${question.md_category_name}<br> ${question.sm_category_name }<br>
 					난이도: ${question.level_name}<br> 정답:

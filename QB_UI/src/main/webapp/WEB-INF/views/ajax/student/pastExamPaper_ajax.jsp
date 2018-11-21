@@ -43,7 +43,7 @@
 									test="${questionChoice.question_num eq question.question_num}">
 									<tr class="ques_choice">
 										<td class="questionTd">
-											<div class="wrap">
+											<div class="wrap">											
 												<img
 													class="oximg_v oximg_v_ques_${question.exam_question_seq}"
 													id="img_ques_${question.exam_question_seq}_${questionChoice.question_choice_num}"
@@ -60,11 +60,10 @@
 											<label
 											for="ques_${question.exam_question_seq}_${questionChoice.question_choice_num}">${questionChoice.question_choice_content}</label>
 										</td>
-									</tr>
+									</tr>									
 									<c:if test="${questionChoice.question_choice_image ne null}">
-										<tr>
-											<td></td>
-											<td><img class="answer_choice_image"
+										<tr>									
+											<td colspan="2"><img class="answer_choice_image"
 												src="${pageContext.request.contextPath}/img/${questionChoice.question_choice_image}"></td>
 										</tr>
 									</c:if>

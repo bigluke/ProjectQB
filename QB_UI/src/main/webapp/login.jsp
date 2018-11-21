@@ -37,7 +37,7 @@
 			<form class="form-login" action="${loginurl}" method="post">
 				<h2 class="form-login-heading">LOGIN</h2>
 				<div class="login-wrap">
-					<label>ID</label> <input type="text" class="form-control"
+					<label>ID</label> <input type="text" autocomplete="off" class="form-control"
 						name="member_id" placeholder="아이디를 입력하세요" autofocus required>
 					<br> <label>PASSWORD</label> <input type="password"
 						class="form-control" name="member_pwd" placeholder="비밀번호를 입력하세요"

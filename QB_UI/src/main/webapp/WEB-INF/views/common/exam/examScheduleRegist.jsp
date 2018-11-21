@@ -83,7 +83,7 @@
                           <label class="control-label col-lg-2">시간</label>
                             <div class="col-lg-4">
                               <div class="input-group bootstrap-timepicker">
-                                <input style="z-index:0;" type="text" class="form-control timepicker-default" id="exam_info_start"
+                                <input style="z-index:0;" type="text" autocomplete="off" class="form-control timepicker-default" id="exam_info_start"
                                  name="exam_info_start" onchange="checktime()" required placeholder="시험 시작 시간 선택    >>">
                                  <span class="input-group-btn">
                                    <button class="btn btn-theme04" type="button" style="z-index:0;"><i class="fa fa-clock-o" style="z-index:0;"></i></button>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-lg-4">
                               <div class="input-group bootstrap-timepicker">
-                                <input style="z-index:0;" type="text" class="form-control timepicker-default" id="exam_info_end"
+                                <input style="z-index:0;" type="text" autocomplete="off" class="form-control timepicker-default" id="exam_info_end"
                                  name="exam_info_end" onchange="checktime()" required required placeholder="시험 종료 시간 선택    >>">
                                   <span class="input-group-btn">
                                     <button class="btn btn-theme04" type="button" style="z-index:0;"><i class="fa fa-clock-o"></i></button>
@@ -120,7 +120,7 @@
                           <div class="form-group">
                             <label class="control-label col-lg-2">응시대상</label>
                               <div class="col-lg-8 examInfoTextBox">
-                                <input type="text" class="form-control" placeholder="이곳에 입력된 응시 대상자는 학생들의 시험 일정에 표시됩니다." id="exam_info_member" name="exam_info_member" required>
+                                <input type="text" autocomplete="off" class="form-control" placeholder="이곳에 입력된 응시 대상자는 학생들의 시험 일정에 표시됩니다." id="exam_info_member" name="exam_info_member" required>
                               </div>
                           </div>
                           <div class="form-group">

@@ -49,7 +49,8 @@ jQuery(document).ready(function() {
       $('#sortable').append(selected);
       $('input[name="checkbox[]"]:checked').prop('checked',false);
       $(".questionDiv").removeClass('active');
-      
+      $(".check-img").removeClass('active');
+      $(".check-img").attr('src',"");
       
       $('#qnum').text(sortable_li_num);
    });

@@ -12,19 +12,7 @@
 <link href="${pageContext.request.contextPath}/lib/fullcalendar/bootstrap-fullcalendar.css"
 	rel="stylesheet">
 
-<script type="text/javascript">
-$(function(){
- 	var date = new Date();
- 	var y = date.getFullYear();
-	$('.fc-button-next').click(function(){
-		var next = $('.fc-header-title h2').text().substr(0,4);
-		if(next == (y+1)){
-			swal((y+1) + "년 서비스 업데이트 중입니다.\n 하단의 큐넷시험일정 을 클릭하여 더 자세한 사항을 보실 수 있습니다.");
-		}
-	});
-});
 
-</script>
 <style>
 .fc-header-center h2{
 	color:#424242;
@@ -68,3 +56,21 @@ $(function(){
 	src="${pageContext.request.contextPath}/lib/fullcalendar/fullcalendar.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/lib/calendar-conf-events.js"></script>
+<script>
+$(document).on("click", ".fc-button-content:eq(0)", function(){
+	var text = $(".fc-header-title").children().eq(0).text();
+	var thatYear = text.substring(0,4);
+	var year = new Date().getFullYear();
+	if(thatYear!=year){
+		swal("알림",thatYear+"년 데이터는 서비스가 종료되었습니다.","info");
+	}
+});
+$(document).on("click", ".fc-button-content:eq(1)", function(){
+	var text = $(".fc-header-title").children().eq(0).text();
+	var thatYear = text.substring(0,4);
+	var year = new Date().getFullYear();
+	if(thatYear!=year){			
+		swal("알림",thatYear+"년 데이터는 서비스 업데이트 중입니다.","info");
+	}
+});
+</script>

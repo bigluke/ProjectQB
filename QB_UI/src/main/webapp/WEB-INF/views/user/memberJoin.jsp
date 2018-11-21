@@ -11,7 +11,7 @@
 		<form class="form-signup" action="insertmember.do" method="post" id="joinform">
 			<h2 class="form-login-heading">회원 가입</h2>
 			<div class="login-wrap">
-				<label>ID</label> <input type="text" class="form-control"
+				<label>ID</label> <input type="text" autocomplete="off" class="form-control"
 					placeholder="아이디를 입력해주세요(최소 5글자)" autofocus name="member_id" id="member_id"
 					onblur="confirmId()">
 				<div id="iddiv"></div>
@@ -27,19 +27,19 @@
 					<c:forEach items="${classList}" var="classList">
                          <option value="${classList.class_name}">${classList.class_name}</option>
                     </c:forEach>
-				</select> <br> <label>이름</label> <input type="text"
+				</select> <br> <label>이름</label> <input type="text" autocomplete="off"
 					class="form-control" placeholder="이름을 입력해주세요"
 					pattern="([a-z, A-Z, 가-힣]){2,}" autofocus name="member_name" id="member_name"
 					required>
-				<label>E-mail</label><br> <input type="text"
+				<label>E-mail</label><br> <input type="text" autocomplete="off"
 					class="form-control authText" placeholder="이메일을 입력해주세요"
 					name="member_email" id="mailto">
 				<button type="button" class="btn btn-theme authBtn" id="mailtoBtn">
 					<i class="fa fa-envelope"></i> 인증번호 전송
 				</button>
 				<br> <br> <label>인증번호 입력</label> 
-				<input type="text" class="form-control" placeholder="인증번호를 입력해주세요" id="textmail" autofocus>
-				<br> <label>휴대전화</label> <input type="text" class="form-control" placeholder="휴대폰 번호를 입력해주세요" pattern="01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})" autofocus name="member_phone" required>
+				<input type="text" class="form-control" autocomplete="off" placeholder="인증번호를 입력해주세요" id="textmail" autofocus>
+				<br> <label>휴대전화</label> <input type="text" autocomplete="off" class="form-control" placeholder="휴대폰 번호를 입력해주세요" pattern="01([0|1|6|7|8|9]?)([0-9]{3,4})([0-9]{4})" autofocus name="member_phone" required>
 				<div>('-'를 제외한 숫자만 입력하세요.)</div>
 
 

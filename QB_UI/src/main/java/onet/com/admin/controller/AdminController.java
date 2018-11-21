@@ -1385,7 +1385,7 @@ public class AdminController {
 		@RequestMapping("aboutUs.do")
 		public String aboutUs(Model model) {
 			
-			return "admin.aboutUs";
+			return "common.admin.common.aboutUs";
 		}
 
 	//양회준 11.5 코멘트 추가
