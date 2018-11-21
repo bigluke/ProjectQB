@@ -4,13 +4,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <% pageContext.setAttribute("newLineChar", "\n"); %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta content="text/html; charset=UTF-8">
-</head>
-<body>
+<c:if test="${fn:length(question) eq 0}">
+	<div class="emptydata">
+		<img src="${pageContext.request.contextPath}/img/empty-question.png" class="img-empty">
+		<h1>등록된 문제가 없습니다.</h1>
+	</div>
+</c:if>
 	<c:forEach items="${question }" var="question">
 		<div class="myQuestions">
 			<div
@@ -72,5 +73,3 @@
 			<hr>
 		</div>
 	</c:forEach>
-</body>
-</html>

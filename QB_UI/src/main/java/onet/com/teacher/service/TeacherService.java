@@ -418,12 +418,12 @@ public class TeacherService {
 		//System.out.println("메시지 최종본  : \n" + message);
 		
 		// 시험에 등록된 학생들의 번호 끌고옴
-		String phoneNumberAll = "";
+		/*String phoneNumberAll = "";
 		for(String member_id : memberchecklist) {
 			MemberDto memberDto = dao.selectMember(member_id);
 			phoneNumberAll += memberDto.getMember_phone() + ", ";
 		}
-		String phoneNumber = phoneNumberAll.substring(0, phoneNumberAll.length()-2);
+		String phoneNumber = phoneNumberAll.substring(0, phoneNumberAll.length()-2);*/
 		//System.out.println("phoneNumber 최종본 : \n" + phoneNumber);
 		
 		/*
@@ -436,7 +436,7 @@ public class TeacherService {
 		Coolsms coolsms = new Coolsms(api_key, api_secret);
 		 
 		HashMap<String, String> set = new HashMap<String, String>();
-		set.put("to", phoneNumber);  // 수신번호 set.put("to", "010000000000");   받는사람 번호 여러개 입력시 set.put("to", "01000000000, 01000000001"); 
+		set.put("to", "01033814205");  // 수신번호 set.put("to", "010000000000");   받는사람 번호 여러개 입력시 set.put("to", "01000000000, 01000000001"); 
 
 		// 10월 16일 이후로 발신번호 사전등록제로 인해 등록된 발신번호로만 문자를 보내실 수 있습니다.
 		set.put("from", "01075319022"); // 발신번호

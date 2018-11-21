@@ -442,10 +442,7 @@ public class StudentController {
 	@RequestMapping(value = "examPaperDo2.do", method = RequestMethod.POST)
 	public String examAnswerInsert(Student_answerDtoList answerList)
 			throws ClassNotFoundException, SQLException, IOException {
-
-		// List<Student_answerDto> items = answerList.getStudent_answer();
 		int result = studentService.examAnswerInsert(answerList);
-
 		return "redirect:pastExam.do";
 
 	}
@@ -709,6 +706,12 @@ public class StudentController {
 	public String apiInfo(Principal principal, Model model) {
 		
 		return "common.student.common.apiInfo";
+	}
+	//태용
+	@RequestMapping("aboutUs.do")
+	public String aboutUs(Model model) {
+		
+		return "common.student.common.aboutUs";
 	}
 
 }
